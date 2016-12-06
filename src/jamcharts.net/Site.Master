@@ -1,0 +1,50 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WebSandbox.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/stylesheet.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body onload="initializePage();" oncontextmenu="return false;">
+    <form runat="server" id="myForm">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                JamCharts!
+            </div>
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+<%--            <div class="clear hideSkiplink">--%>
+<%--                <asp:Menu runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">--%>
+<%--                    <Items>--%>
+<%--                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home"/>--%>
+<%--                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>--%>
+<%--                    </Items>--%>
+<%--                </asp:Menu>--%>
+<%--            </div>--%>
+        </div> 
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2012 Gibraltar Software&nbsp;&nbsp;|&nbsp;&nbsp;Custom webfont created by <a href="http://www.jazzfont.com/">Sigler Music Fonts</a>
+    </div>
+    </form>
+</body>
+</html>

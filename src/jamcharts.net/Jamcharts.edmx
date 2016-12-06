@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JamChartsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="JamChartsModelStoreContainer">
+          <EntitySet Name="Song" EntityType="JamChartsModel.Store.Song" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SongHistory" EntityType="JamChartsModel.Store.SongHistory" store:Type="Views" store:Schema="dbo" store:Name="SongHistory">
+            <DefiningQuery>SELECT 
+      [SongHistory].[Title] AS [Title], 
+      [SongHistory].[Timestamp] AS [Timestamp], 
+      [SongHistory].[SongId] AS [SongId], 
+      [SongHistory].[DateAdded] AS [DateAdded], 
+      [SongHistory].[DateDeleted] AS [DateDeleted], 
+      [SongHistory].[Version] AS [Version]
+      FROM [dbo].[SongHistory] AS [SongHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SongTitle" EntityType="JamChartsModel.Store.SongTitle" store:Type="Views" store:Schema="dbo" store:Name="SongTitle">
+            <DefiningQuery>SELECT 
+      [SongTitle].[Title] AS [Title], 
+      [SongTitle].[SongId] AS [SongId]
+      FROM [dbo].[SongTitle] AS [SongTitle]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="SongId" />
+          </Key>
+          <Property Name="SongId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Key" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="Time" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="Chords" Type="varchar(max)" Nullable="false" />
+          <Property Name="Lyrics" Type="nvarchar(max)" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateDeleted" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'JamCharts.dbo.SongHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SongHistory">
+          <Key>
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="SongId" />
+            <PropertyRef Name="DateAdded" />
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Title" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Timestamp" Type="varchar" MaxLength="64" />
+          <Property Name="SongId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateDeleted" Type="datetime" />
+          <Property Name="Version" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'JamCharts.dbo.SongTitle' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SongTitle">
+          <Key>
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="SongId" />
+          </Key>
+          <Property Name="Title" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SongId" Type="int" Nullable="false" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JamChartsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="jamchartsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Songs" EntityType="JamChartsModel.Song" />
+          <EntitySet Name="SongTitles" EntityType="JamChartsModel.SongTitle" />
+          <EntitySet Name="SongHistories" EntityType="JamChartsModel.SongHistory" />
+        </EntityContainer>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="SongId" />
+          </Key>
+          <Property Name="SongId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="Time" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="Chords" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Lyrics" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="Version" Nullable="false" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" />
+          <Property Type="DateTime" Name="DateDeleted" />
+        </EntityType>
+        <EntityType Name="SongTitle">
+          <Key>
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="SongId" />
+          </Key>
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SongId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SongHistory">
+          <Key>
+            <PropertyRef Name="SongId" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="DateAdded" />
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Type="String" Name="Timestamp" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SongId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DateAdded" Nullable="false" />
+          <Property Type="DateTime" Name="DateDeleted" />
+          <Property Type="Int32" Name="Version" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JamChartsModelStoreContainer" CdmEntityContainer="jamchartsEntities">
+          <EntitySetMapping Name="Songs"><EntityTypeMapping TypeName="JamChartsModel.Song"><MappingFragment StoreEntitySet="Song">
+            <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="SongId" ColumnName="SongId" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="Key" ColumnName="Key" />
+            <ScalarProperty Name="Time" ColumnName="Time" />
+            <ScalarProperty Name="Chords" ColumnName="Chords" />
+            <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SongTitles">
+            <EntityTypeMapping TypeName="JamChartsModel.SongTitle">
+              <MappingFragment StoreEntitySet="SongTitle">
+                <ScalarProperty Name="SongId" ColumnName="SongId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SongHistories">
+            <EntityTypeMapping TypeName="JamChartsModel.SongHistory">
+              <MappingFragment StoreEntitySet="SongHistory">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SongId" ColumnName="SongId" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Jamcharts">
+        <EntityTypeShape EntityType="JamChartsModel.Song" Width="1.5" PointX="0.75" PointY="0.75" Height="2.172587890625" IsExpanded="true" />
+        <EntityTypeShape EntityType="JamChartsModel.SongTitle" Width="1.5" PointX="3.375" PointY="0.75" Height="1.4033821614583331" />
+        <EntityTypeShape EntityType="JamChartsModel.SongHistory" Width="1.5" PointX="3.375" PointY="3.75" Height="1.4033821614583322" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

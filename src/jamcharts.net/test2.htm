@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Image-Resize</title>
+	<script type="text/javascript">
+	    var canvas, ctx;
+	    function setup() {
+	        canvas = document.getElementById("screenCanvas");
+	        ctx = canvas.getContext("2d");
+	        draw();
+	        window.addEventListener("resize", draw);
+	    }
+	    function draw() {
+	        canvas.width = window.innerWidth;
+	        canvas.height = window.innerHeight;
+	        ctx.fillStyle = "rgb(0,0,0)";
+	        ctx.fillRect(0, 0, canvas.width, canvas.height);
+	        var img = new Image();
+	        img.src = "http://media.whosay.com/30729/30729_la.jpg";
+	        img.onload = function () {
+	            var border = 8;
+	            var rowCount = Math.floor(canvas.height / 200);
+	            var colCount = Math.floor(canvas.width / 200);
+	            if (rowCount < 1)
+	                rowCount = 1;
+	            if (colCount < 1)
+	                colCount = 1;
+	            var width = (canvas.width - (colCount + 1) * border) / colCount;
+	            var height = (canvas.height - (rowCount + 1) * border) / rowCount;
+	            for (var r = 0; r < rowCount; r++) {
+	                for (var c = 0; c < colCount; c++) {
+	                    var x = border + c * (width + border);
+	                    var y = border + r * (height + border);
+	                    ctx.drawImage(img, x, y, width, height);
+	                }
+	            }
+	        };
+	    }
+	</script>
+</head>
+<body onload="setup()" style="margin:0; overflow:hidden">
+	<canvas id="screenCanvas"></canvas>
+</body>
+</html>
